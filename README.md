@@ -25,7 +25,7 @@ This package requires the following:
 
 * Install `raspimouse_ros_2`
     * Check it with the imu
-* `sudo apt install ros-kinetic-urg-node`
+* Install `urg_node` and `move_base`
 * Clone this package at the `src` directory of the catkin workspace
 * `catkin_make && source ~/catkin_ws/devel/setup.bash`
 
