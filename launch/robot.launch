@@ -1,0 +1,9 @@
+<launch>
+  <include file="$(find raspimouse_ros_2)/launch/raspimouse.launch" /> 
+
+  <node pkg="urg_node" name="urg_node" type="urg_node" required="true" >
+        <param name="frame_id" value="base_link"/>
+  </node>
+
+  <include file="$(find raspimouse_navigation_3)/launch/run_amcl.launch"/>
+</launch>

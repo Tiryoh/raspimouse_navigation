@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- Run Map Server -->
+  <arg name="map_file" default="$(find raspimouse_navigation_3)/maps/ueda_room.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen"/>
+
+  <!-- Run Move Base -->
+  <include file="$(find raspimouse_navigation_3)/launch/run_move_base.launch"/>
+
+</launch>
