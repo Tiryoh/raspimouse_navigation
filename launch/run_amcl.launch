@@ -37,5 +37,6 @@
     <param name="recovery_alpha_fast" value="0.0"/>
     <param name="reset_th_alpha" value="3.0"/>
     <param name="reset_th_cov" value="0.1"/>
+    <param name="use_map_topic" value="true"/>
   </node>
 </launch>
