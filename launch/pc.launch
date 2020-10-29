@@ -1,8 +1,9 @@
+<?xml version="1.0"?>
 <launch>
-  <include file="$(find raspimouse_navigation_3)/launch/run_move_base.launch"/>
-  <include file="$(find raspimouse_navigation_3)/launch/run_amcl.launch"/>
+  <include file="$(find raspimouse_navigation)/launch/run_move_base.launch" />
+  <include file="$(find raspimouse_navigation)/launch/run_amcl.launch" />
 
-  <arg name="map_file" default="$(find raspimouse_navigation_3)/maps/ueda_room.yaml"/>
+  <arg name="map_file" default="$(find raspimouse_navigation)/maps/ueda_room.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen"/>
   <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0.01 0 3.14 3.14 base_link laser 100" />
 </launch>

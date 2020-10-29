@@ -1,26 +1,22 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>raspimouse_navigation_3</name>
+  <name>raspimouse_navigation</name>
   <version>0.0.0</version>
-  <description>The raspimouse_navigation_3 package</description>
+  <description>Navigation package</description>
 
-  <maintainer email="ryo.okazaki.0929@gmail.com">Ryo Okazaki</maintainer>
+  <maintainer email="tiryoh@gmail.com">Daisuke Sato</maintainer>
 
   <license>MIT</license>
 
   <author email="ryuichiueda@gmail.com">Ryuichi Ueda</author>
   <author email="ryo.okazaki.0929@gmail.com">Ryo Okazaki</author>
+  <author email="tiryoh@gmail.com">Daisuke Sato</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>amcl</exec_depend>
   <exec_depend>move_base</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>raspimouse_ros_2</exec_depend>
+  <exec_depend>rt_usb_9axisimu_driver</exec_depend>
 
-
-  <!-- The export tag contains other, unspecified, tags -->
-  <export>
-    <!-- Other tools can request additional information be placed here -->
-
-  </export>
 </package>
