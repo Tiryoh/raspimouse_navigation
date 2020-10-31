@@ -1,46 +1,114 @@
-# raspimouse_navigation_3
-Navigation package for Raspberry Pi Mouse.
+# raspimouse_navigation
 
-## Demo
-* [navigation of Raspberry Pi Mouse with move_base - YouTube](https://youtu.be/xFDgn9gEc14)
+Raspberry Pi MouseでROSのNavigation Stackを使ってナビゲーションをするためのパッケージです。
 
-## Requirements
+地図の生成には[rt-net/raspimouse_ros_examples]にある`slam_gmapping.launch`を使うことができます。
 
-This package requires the following:
-* Robot
-  * Raspberry Pi Mouse
-* Laser Rangefinder
-  * URG-04LX-UG01
-* IMU
-  * RT-USB-9AXIS-00
-* Ubuntu
-  * Ubuntu 16.04 (Ubuntu 16.04 Server recomended)
+[Raspberry Pi Mouse V3](https://rt-net.jp/products/raspberrypimousev3/)を用いた実機でのナビゲーションと
+[rt-net/raspimouse_sim](https://github.com/rt-net/raspimouse_sim)を用いたシミュレータ上でのナビゲーション両方で動作確認をしています。
+
+## 実機
+### 動作環境
+#### Raspberry Pi Mouse
+##### ハードウェア
+
+* [Raspberry Pi Mouse V3](https://rt-net.jp/products/raspberrypimousev3/)
+  * with Raspberry Pi 3B, 4B
+  * with LIDAR
+    * RPLIDAR
+    * LDS-01
+    * URG-04LX-UG01
+
+##### ソフトウェア
+
+* OS
+  * [Ubuntu 'classic' 18.04 LTS](https://wiki.ubuntu.com/ARM/RaspberryPi)
+* Device Driver
+  * [rt-net/RaspberryPiMouse](https://github.com/rt-net/RaspberryPiMouse)
 * ROS
-  * Kinetic Kame
-* ROS Package
-  * urg_node - [urg_node - ROS WiKi](http://wiki.ros.org/urg_node)
-  * raspimouse_ros_2 - [ryuichiueda/raspimouse_ros_2](https://github.com/ryuichiueda/raspimouse_ros_2)
+  * [Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
+* ROS Packages
+  * [ryuichiueda/raspimouse_ros_2](https://github.com/ryuichiueda/raspimouse_ros_2)
+  * [rt-net/raspimouse_ros_examples](https://github.com/rt-net/raspimouse_ros_examples)
 
-## Installation
+#### Remote PC
 
-* Install `raspimouse_ros_2`
-    * Check it with the imu
-* Install `urg_node` and `move_base`
-* Clone this package at the `src` directory of the catkin workspace
-* `catkin_make && source ~/catkin_ws/devel/setup.bash`
+* OS
+  * [Ubuntu 18.04 LTS](https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix)
+* ROS
+  * [Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
+* ROS Packages
+  * [ryuichiueda/raspimouse_ros_2](https://github.com/ryuichiueda/raspimouse_ros_2)
+  * [rt-net/raspimouse_ros_examples](https://github.com/rt-net/raspimouse_ros_examples)
 
+### インストール
 
-## Usage
+```sh
+# ROSパッケージのダウンロード
+cd ~/catkin_ws/src
+git clone https://github.com/ryuichiueda/raspimouse_ros_2.git
+git clone https://github.com/rt-net/raspimouse_ros_examples.git
+git clone https://github.com/Tiryoh/raspimouse_navigation.git
 
-Please place a map in [maps](./maps) and launch nodes with `robot.launch` and `pc.launch` on the Raspberry Pi Mouse side and the PC side respectively.
+# 依存パッケージのインストール
+rosdep install -r -y -i --from-paths .
 
-
-
+# make & install
+cd ~/catkin_ws && catkin build
+source devel/setup.bash
 ```
-(robot side)$ roslaunch raspimouse_navigation_3 robot.launch
-(pc side   )$ roslaunch raspimouse_navigation_3 pc.launch
+
+### 使い方
+
+Raspberry Pi Mouse
+
+```sh
+roslaunch raspimouse_navigation robot.launch
 ```
 
-## License
+Remote PC
 
-This repository is licensed under the MIT license, see [LICENSE](./LICENSE).
+```sh
+roslaunch raspimouse_navigation pc.launch map_file:="/path/to/mapfile"
+```
+
+## シミュレータ
+### 動作環境
+#### ソフトウェア
+
+* OS
+  * [Ubuntu 18.04 LTS](https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix)
+* ROS
+  * [Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
+* ROS Packages
+  * [ryuichiueda/raspimouse_ros_2](https://github.com/ryuichiueda/raspimouse_ros_2)
+  * [rt-net/raspimouse_ros_examples](https://github.com/rt-net/raspimouse_ros_examples)
+  * [rt-net/raspimouse_sim](https://github.com/rt-net/raspimouse_sim)
+
+### インストール
+
+```sh
+# ROSパッケージのダウンロード
+cd ~/catkin_ws/src
+git clone https://github.com/ryuichiueda/raspimouse_ros_2.git
+git clone https://github.com/rt-net/raspimouse_ros_examples.git
+git clone https://github.com/rt-net/raspimouse_sim.git
+git clone https://github.com/Tiryoh/raspimouse_navigation.git
+
+# 依存パッケージのインストール
+rosdep install -r -y -i --from-paths .
+
+# make & install
+cd ~/catkin_ws && catkin build
+source devel/setup.bash
+```
+
+### 使い方
+
+```sh
+roslaunch raspimouse_navigation pc.launch map_file:="/path/to/mapfile"
+```
+
+## ライセンス
+
+This repository is licensed under the MIT License, see [LICENSE](./LICENSE).
