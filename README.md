@@ -1,8 +1,8 @@
 # raspimouse_navigation
 
-Raspberry Pi MouseでROSのNavigation Stackを使ってナビゲーションをするためのパッケージです。
+Raspberry Pi MouseでROSの[Navigation Stack](https://wiki.ros.org/navigation)を使ってナビゲーションをするためのパッケージです。
 
-地図の生成には[rt-net/raspimouse_ros_examples]にある`slam_gmapping.launch`を使うことができます。
+地図の生成には[rt-net/raspimouse_ros_examples](https://github.com/rt-net/raspimouse_ros_examples)にある`slam_gmapping.launch`を使うことができます。
 
 [Raspberry Pi Mouse V3](https://rt-net.jp/products/raspberrypimousev3/)を用いた実機でのナビゲーションと
 [rt-net/raspimouse_sim](https://github.com/rt-net/raspimouse_sim)を用いたシミュレータ上でのナビゲーション両方で動作確認をしています。
@@ -60,16 +60,62 @@ source devel/setup.bash
 
 ### 使い方
 
-Raspberry Pi Mouse
+#### SLAM
+
+##### Raspberry Pi Mouse
+
+Raspberry Pi Mouse上で次のコマンドでノードを起動します。
+
+```sh
+# URG
+roslaunch raspimouse_ros_examples mouse_with_lidar.launch urg:=true port:=/dev/ttyACM0
+
+# RPLIDAR
+roslaunch raspimouse_ros_examples mouse_with_lidar.launch rplidar:=true port:=/dev/ttyUSB0
+
+# LDS
+roslaunch raspimouse_ros_examples mouse_with_lidar.launch lds:=true port:=/dev/ttyUSB0
+```
+
+##### Remote PC
+
+1枚目の端末でRaspberry Pi Mouse操作のためのteleop用launchを起動します。
+
+```sh
+roslaunch raspimouse_ros_examples teleop.launch key:=true mouse:=false
+```
+
+2枚目の端末で地図を作成するためのlaunchを起動します。
+
+```sh
+roslaunch raspimouse_ros_examples slam_gmapping.launch 
+```
+
+地図作成後、3枚目の端末で地図を保存します。
+
+```sh
+roscd raspimouse_navigation/maps
+rosrun map_server map_saver -f mymap
+```
+
+#### Navigation
+
+##### Raspberry Pi Mouse
+
+Raspberry Pi Mouse上で次のコマンドでノードを起動します。
 
 ```sh
 roslaunch raspimouse_navigation robot.launch
 ```
 
-Remote PC
+###### Remote PC
+
+Remote PC上で次のコマンドでノードを起動します。
+
+`map_file`には保存した地図のファイルを指定します。
 
 ```sh
-roslaunch raspimouse_navigation pc.launch map_file:="/path/to/mapfile"
+roslaunch raspimouse_navigation pc.launch map_file:="$(rospack find raspimouse_navigation)/maps/mymap.yaml"
 ```
 
 ## シミュレータ
@@ -105,8 +151,46 @@ source devel/setup.bash
 
 ### 使い方
 
+#### SLAM
+
+1枚目の端末でRaspberry Pi Mouse Simulatorを起動します。
+
 ```sh
-roslaunch raspimouse_navigation pc.launch map_file:="/path/to/mapfile"
+roslaunch raspimouse_gazebo raspimouse_with_willowgarage.launch xacro_option:="lidar:=urg lidar_frame:=laser" 
+```
+
+2枚目の端末でRaspberry Pi Mouse操作のためのteleop用launchを起動します。
+
+```sh
+roslaunch raspimouse_ros_examples teleop.launch key:=true mouse:=false
+```
+
+3枚目の端末で地図を作成するためのlaunchを起動します。
+
+```sh
+roslaunch raspimouse_ros_examples slam_gmapping.launch 
+```
+
+地図作成後、4枚目の端末で地図を保存します。
+
+```sh
+roscd raspimouse_navigation/maps
+rosrun map_server map_saver -f mymap
+```
+
+#### Navigation
+
+1枚目の端末でRaspberry Pi Mouse Simulatorを起動します。
+
+```sh
+roslaunch raspimouse_gazebo raspimouse_with_willowgarage.launch xacro_option:="lidar:=urg lidar_frame:=laser" 
+```
+
+2枚目の端末で次のコマンドでノードを起動します。
+`map_file`には保存した地図のファイルを指定します。
+
+```sh
+roslaunch raspimouse_navigation pc.launch map_file:="$(rospack find raspimouse_navigation)/maps/mymap.yaml"
 ```
 
 ## ライセンス
