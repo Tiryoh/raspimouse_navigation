@@ -195,4 +195,13 @@ roslaunch raspimouse_navigation pc.launch map_file:="$(rospack find raspimouse_n
 
 ## ライセンス
 
-This repository is licensed under the MIT License, see [LICENSE](./LICENSE).
+このリポジトリはMITライセンスで公開されています。詳細は[LICENSE](./LICENSE)を確認してください。
+
+### 謝辞
+
+このリポジトリは [zaki0929/raspimouse_navigation_3](https://github.com/zaki0929/raspimouse_navigation_3) から派生したものです。
+
+* [zaki0929/raspimouse_navigation_3](https://github.com/zaki0929/raspimouse_navigation_3)
+  * Copyright (c) 2017-2018 Ryo Okazaki
+  * Copyright (c) 2018 Ryuichi Ueda
+  * [MIT License](https://github.com/zaki0929/raspimouse_navigation_3/blob/master/LICENSE)
